@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  init:
+    build: .
+    depends_on:
+      - "click"
+      - "post"
+#    command: tail -F anything
+    container_name: init
+
+  click:
+    image: yandex/clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    container_name: click
+
+  post:
+    image: postgres:13.1
+    environment:
+      POSTGRES_PASSWORD: 1
+    ports:
+      - "5432:5432"
+    container_name: post
